@@ -1,0 +1,15 @@
+{
+  "name": "skydiablo/sky-ttl-list",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Volker von Hoeßlin",
+      "email": "skydiablo@gmx.net"
+    }
+  ],
+  "require": {
+    "react/event-loop": "^v0.5"
+  }
+}
