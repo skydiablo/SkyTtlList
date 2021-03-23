@@ -39,7 +39,7 @@ class SkyTtlList extends \ArrayIterator
         parent::offsetUnset($key);
     }
 
-    protected function unsetTtlTimer(string $key)
+    protected function unsetTtlTimer($key)
     {
         /** @var TimerInterface $timer */
         if ($timer = $this->timerList[$key] ?? null) {
@@ -56,7 +56,7 @@ class SkyTtlList extends \ArrayIterator
      * @param float|null $ttl
      * @return SkyTtlList
      */
-    public function set(string $key, $value, float $ttl = null): SkyTtlList
+    public function set($key, $value, float $ttl = null): SkyTtlList
     {
         $this->offsetSet($key, $value, $ttl);
         return $this;
