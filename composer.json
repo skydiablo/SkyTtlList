@@ -2,7 +2,8 @@
   "name": "skydiablo/sky-ttl-list",
   "description": "description",
   "minimum-stability": "stable",
-  "license": "proprietary",
+  "type": "library",
+  "license": "MIT",
   "authors": [
     {
       "name": "Volker von Hoeßlin",
@@ -11,5 +12,10 @@
   ],
   "require": {
     "react/event-loop": "^v0.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "SkyDiablo\\SkyTtlList\\": "src/"
+    }
   }
 }
