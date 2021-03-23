@@ -25,7 +25,7 @@ class SkyTtlList extends \ArrayIterator
         $this->defaultCleanupInterval = $defaultCleanupInterval;
     }
 
-    protected function defineTtlTimer(float $ttl, string $key): void
+    protected function defineTtlTimer(string $key, float $ttl = null): void
     {
         $this->unsetTtlTimer($key);
         $this->timerList[$key] = $this->loop->addTimer($ttl ?? $this->defaultCleanupInterval, function () use ($key) {
@@ -78,7 +78,7 @@ class SkyTtlList extends \ArrayIterator
      */
     public function offsetSet($key, $value, float $ttl = null)
     {
-        $this->defineTtlTimer($ttl, $key);
+        $this->defineTtlTimer($key, $ttl);
         parent::offsetSet($key, $value);
     }
 
