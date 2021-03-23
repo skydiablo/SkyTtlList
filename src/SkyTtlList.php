@@ -4,12 +4,13 @@ declare(strict_types=1);
 namespace SkyDiablo\SkyTtlList;
 
 use React\EventLoop\LoopInterface;
+use React\EventLoop\TimerInterface;
 
 class SkyTtlList extends \ArrayIterator
 {
 
     protected LoopInterface $loop;
-    protected array $list;
+    protected array $timerList;
     protected float $defaultCleanupInterval;
 
     /**
@@ -26,10 +27,27 @@ class SkyTtlList extends \ArrayIterator
 
     protected function defineTtlTimer(float $ttl, string $key): void
     {
-        $this->loop->addTimer($ttl ?? $this->defaultCleanupInterval, function () use ($key) {
+        $this->unsetTtlTimer($key);
+        $this->timerList[$key] = $this->loop->addTimer($ttl ?? $this->defaultCleanupInterval, function () use ($key) {
             unset($this[$key]);
         });
     }
+
+    public function offsetUnset($key)
+    {
+        $this->unsetTtlTimer($key);
+        parent::offsetUnset($key);
+    }
+
+    protected function unsetTtlTimer(string $key)
+    {
+        /** @var TimerInterface $timer */
+        if ($timer = $this->timerList[$key] ?? null) {
+            $this->loop->cancelTimer($timer);
+        }
+        unset($this->timerList[$key]);
+    }
+
 
     /**
      * alias for "offsetSet"
@@ -50,7 +68,7 @@ class SkyTtlList extends \ArrayIterator
      */
     public function get(string $key)
     {
-        return $this->list[$key];
+        return $this[$key];
     }
 
     /**
