@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "react/event-loop": "^v0.5"
+    "react/event-loop": "^v1.2"
   },
   "autoload": {
     "psr-4": {
